@@ -19,7 +19,7 @@ import static org.hamcrest.Matcher.*;
 * TxHandler Tester. 
 * 
 * @author <Authors name> 
-* @since <pre>9ÔÂ 21, 2019</pre> 
+* @since <pre>9ï¿½ï¿½ 21, 2019</pre> 
 * @version 1.0 
 */ 
 public class TxHandlerTest {
@@ -29,18 +29,18 @@ public class TxHandlerTest {
     TxHandler test_Txhandler;
     //get participaters
     Map ma = Transaction.genKeyPair();
-    RSAPrivateKey ska = (RSAPrivateKey) ma.get("PRIVATE_KEY");//»ñÈ¡¹«Ô¿Ë½Ô¿
+    RSAPrivateKey ska = (RSAPrivateKey) ma.get("PRIVATE_KEY");//ï¿½ï¿½È¡ï¿½ï¿½Ô¿Ë½Ô¿
     RSAPublicKey pka = (RSAPublicKey) ma.get("PUBLIC_KEY");
     Map mb = Transaction.genKeyPair();
-    RSAPrivateKey skb = (RSAPrivateKey) mb.get("PRIVATE_KEY");//»ñÈ¡¹«Ô¿Ë½Ô¿
+    RSAPrivateKey skb = (RSAPrivateKey) mb.get("PRIVATE_KEY");//ï¿½ï¿½È¡ï¿½ï¿½Ô¿Ë½Ô¿
     RSAPublicKey pkb = (RSAPublicKey) mb.get("PUBLIC_KEY");
     Map mc = Transaction.genKeyPair();
-    RSAPrivateKey skc = (RSAPrivateKey) mc.get("PRIVATE_KEY");//»ñÈ¡¹«Ô¿Ë½Ô¿
+    RSAPrivateKey skc = (RSAPrivateKey) mc.get("PRIVATE_KEY");//ï¿½ï¿½È¡ï¿½ï¿½Ô¿Ë½Ô¿
     RSAPublicKey pkc = (RSAPublicKey) mc.get("PUBLIC_KEY");
 
     @Before
 public void before() throws Exception {
-        //get initial money£¬Öý±Ò½»Ò×µÄÉè¶¨
+        //get initial moneyï¿½ï¿½ï¿½ï¿½ï¿½Ò½ï¿½ï¿½×µï¿½ï¿½è¶¨
         Transaction.Output outa = new Transaction().new Output(100,pka);
         Transaction.Output outb = new Transaction().new Output(100,pkb);
         Transaction.Output outc = new Transaction().new Output(100,pkc);
@@ -198,4 +198,124 @@ public void tesDoubleSpending2() throws Exception {
     Transaction[] expect = {trans_a_to_b};
     assertThat(test_Txhandler.handleTxs(trans),is(expect));
 }
+
+//test transaction net as a challege for myself
+    @Test
+    public void testTxNet() throws Exception {
+        byte[] tx_origin_hashd;
+        byte[] tx_origin_hashe;
+        byte[] tx_origin_hashf;
+        byte[] tx_origin_hashg;
+        byte[] tx_origin_hashh;
+        byte[] tx_origin_hashi;
+        //get participaters
+        Map md = Transaction.genKeyPair();
+        RSAPrivateKey skd = (RSAPrivateKey) md.get("PRIVATE_KEY");
+        RSAPublicKey pkd = (RSAPublicKey) md.get("PUBLIC_KEY");
+        Map me = Transaction.genKeyPair();
+        RSAPrivateKey ske = (RSAPrivateKey) me.get("PRIVATE_KEY");
+        RSAPublicKey pke = (RSAPublicKey) me.get("PUBLIC_KEY");
+        Map mf = Transaction.genKeyPair();
+        RSAPrivateKey skf = (RSAPrivateKey) mf.get("PRIVATE_KEY");
+        RSAPublicKey pkf = (RSAPublicKey) mf.get("PUBLIC_KEY");
+        Map mg = Transaction.genKeyPair();
+        RSAPrivateKey skg = (RSAPrivateKey) mg.get("PRIVATE_KEY");
+        RSAPublicKey pkg = (RSAPublicKey) mg.get("PUBLIC_KEY");
+        Map mh = Transaction.genKeyPair();
+        RSAPrivateKey skh = (RSAPrivateKey) mh.get("PRIVATE_KEY");
+        RSAPublicKey pkh = (RSAPublicKey) mh.get("PUBLIC_KEY");
+        Map mi = Transaction.genKeyPair();
+        RSAPrivateKey ski = (RSAPrivateKey) mi.get("PRIVATE_KEY");
+        RSAPublicKey pki = (RSAPublicKey) mi.get("PUBLIC_KEY");
+        //get money
+        Transaction.Output outd = new Transaction().new Output(100,pkd);
+        Transaction.Output oute = new Transaction().new Output(100,pke);
+        Transaction.Output outf = new Transaction().new Output(100,pkf);
+        Transaction.Output outg = new Transaction().new Output(100,pkg);
+        Transaction.Output outh = new Transaction().new Output(100,pkh);
+        Transaction.Output outi = new Transaction().new Output(100,pki);
+        tx_origin_hashg  = new String("origin_tx_hashG").getBytes();
+        tx_origin_hashh  = new String("origin_tx_hashH").getBytes();
+        tx_origin_hashi  = new String("origin_tx_hashI").getBytes();
+        tx_origin_hashd  = new String("origin_tx_hashD").getBytes();
+        tx_origin_hashe  = new String("origin_tx_hashE").getBytes();
+        tx_origin_hashf  = new String("origin_tx_hashF").getBytes();
+        upool.addUTXO(new UTXO(tx_origin_hashd,0),outd);
+        upool.addUTXO(new UTXO(tx_origin_hashe,0),oute);
+        upool.addUTXO(new UTXO(tx_origin_hashf,0),outf);
+        upool.addUTXO(new UTXO(tx_origin_hashd,0),outg);
+        upool.addUTXO(new UTXO(tx_origin_hashe,0),outh);
+        upool.addUTXO(new UTXO(tx_origin_hashf,0),outi);
+        //a to b, a to d
+        Transaction trans_a_to_b = new Transaction();
+        trans_a_to_b.addInput(tx_origin_hasha,0);
+        trans_a_to_b.addOutput(100,pkb);
+        trans_a_to_b.GETsign(ska,0);
+        trans_a_to_b.finalize();
+        Transaction trans_a_to_d = new Transaction();
+        trans_a_to_d.addInput(tx_origin_hasha,0);
+        trans_a_to_d.addOutput(100,pkd);
+        trans_a_to_d.GETsign(ska,0);
+        trans_a_to_d.finalize();
+        //b to c, b to g
+        Transaction trans_b_to_c = new Transaction();
+        trans_b_to_c.addInput(tx_origin_hashb,0);
+        trans_b_to_c.addOutput(100,pkc);
+        trans_b_to_c.GETsign(skb,0);
+        trans_b_to_c.finalize();
+        Transaction trans_b_to_g = new Transaction();
+        trans_b_to_g.addInput(trans_a_to_b.getHash(),0);
+        trans_b_to_g.addOutput(100,pkg);
+        trans_b_to_g.GETsign(skb,0);
+        trans_b_to_g.finalize();
+        //d to e, d to f, d to i
+        Transaction trans_d_to_e = new Transaction();
+        trans_d_to_e.addInput(tx_origin_hashd,0);
+        trans_d_to_e.addOutput(100,pke);
+        trans_d_to_e.GETsign(skd,0);
+        trans_d_to_e.finalize();
+        Transaction trans_d_to_f = new Transaction();
+        trans_d_to_f.addInput(trans_a_to_d.getHash(),0);
+        trans_d_to_f.addOutput(100,pkf);
+        trans_d_to_f.GETsign(skd,0);
+        trans_d_to_f.finalize();
+        Transaction trans_d_to_i = new Transaction();
+        trans_d_to_i.addInput(trans_a_to_d.getHash(),0);
+        trans_d_to_i.addOutput(100,pki);
+        trans_d_to_i.GETsign(skd,0);
+        trans_d_to_i.finalize();
+        //e to h, e to i
+        Transaction trans_e_to_h = new Transaction();
+        trans_e_to_h.addInput(tx_origin_hashe,0);
+        trans_e_to_h.addOutput(100,pkh);
+        trans_e_to_h.GETsign(ske,0);
+        trans_e_to_h.finalize();
+        Transaction trans_e_to_i = new Transaction();
+        trans_e_to_i.addInput(trans_d_to_e.getHash(),0);
+        trans_e_to_i.addOutput(100,pkf);
+        trans_e_to_i.GETsign(ske,0);
+        trans_e_to_i.finalize();
+        //f to g
+        Transaction trans_f_to_g = new Transaction();
+        trans_f_to_g.addInput(tx_origin_hashf,0);
+        trans_f_to_g.addOutput(100,pkg);
+        trans_f_to_g.GETsign(skf,0);
+        trans_f_to_g.finalize();
+        //g to h
+        Transaction trans_g_to_h = new Transaction();
+        trans_g_to_h.addInput(tx_origin_hashg,0);
+        trans_g_to_h.addOutput(100,pkh);
+        trans_g_to_h.GETsign(skg,0);
+        trans_g_to_h.finalize();
+        Transaction[] trans = {trans_a_to_b, trans_a_to_d,trans_b_to_c,trans_b_to_g,trans_d_to_e,trans_d_to_f,
+                trans_d_to_i,trans_e_to_h,trans_e_to_i,trans_f_to_g,trans_g_to_h};
+        Transaction[] expect = {};
+        for(int i=0;i<trans.length;i++) {
+            for(int j=0;j<test_Txhandler.handleTxs(trans).length;j++) {
+                if (trans[i] == test_Txhandler.handleTxs(trans)[j]) {
+                    System.out.print(trans[i]+"\n");
+                }
+            }
+        }
+    }
 }

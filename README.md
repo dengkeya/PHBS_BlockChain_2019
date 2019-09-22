@@ -20,44 +20,61 @@
 
 I designed a series of transactions. For valid transactions, I designed single-in-single-out, single-in-multiple-out, multiple-in-single-out, multiple-in-multiple-out, respectively, to verify them, and output the valid transaction array. For invalid transactions, I designed 5 transactions that violated the 5 given requirements, and tested them one by one. In addition, I have designed 2  problems about double spending, one is 1 transaction, the other is 2 transactions.
 
-Before the test started, I initialized the whole test and generated 3 people, each giving 100 yuan.
+In the beginning, I generated 3 people using my keypairgenerator, which is wrriten in my Class Transaction. Before the test started, I initialized the whole test and gave 3 people each of them 100 yuan. 
 
-#### For valid transactions:
+**There is a interesting trick.** I did not construct the whole transaction from input to output. I just gave the outputs, and using method .getByte() to create hash of these transactions about creating coins, as follows:**(PS: This trick is from my instructor 沈廷威， who helps me a lot in Java. I think it's great, so I also used this trick here.)**
 
-- testOneInOneOutIsvalidTx()
+```java
+Transaction.Output outa = new Transaction().new Output(100,pka);
+Transaction.Output outb = new Transaction().new Output(100,pkb);
+Transaction.Output outc = new Transaction().new Output(100,pkc);
+tx_origin_hasha  = new String("origin_tx_hashA").getBytes();
+tx_origin_hashb  = new String("origin_tx_hashB").getBytes();
+tx_origin_hashc  = new String("origin_tx_hashC").getBytes();
+upool.addUTXO(new UTXO(tx_origin_hasha,0),outa);
+upool.addUTXO(new UTXO(tx_origin_hashb,0),outb);
+upool.addUTXO(new UTXO(tx_origin_hashc,0)  
+```
 
-  This is a common transaction with one in one out. It is expected to be true.
 
-- testOneInMultiOutIsValidTx()
 
-  This is a common transaction with one in one out. It is expected to be true.
+- First of all, I verify several simple **valid** transactions to see if my method can work.
+  - testOneInOneOutIsvalidTx()
+  - testOneInMultiOutIsValidTx()
+  - testMultiInOneOutIsValidTx()
+  - testMultiInMultiOutIsValidTx()
 
-- testMultiInOneOutIsValidTx()
 
-  This is a common transaction with multi-in one out. It is expected to be true.
 
-- testMultiInMultiOutIsValidTx()
+- Then, I  designed 5 **invalid** transactions that violated the 5 given requirements, and tested them one by one.
 
-  This is a common transaction with multi-in multi-out. It is expected to be true.
+  - testSignatureInValid()
 
-#### For invalid transactions:
+  - testNegativeOutput()
 
-- testSignatureInValid()
+  - testInputShorage()
 
-  For a transaction a to b using 100 yuan,instead of  the signature was signed by a, I designed it was signed by c. 
+  - testDoubleSpending1()
 
-- testNegativeOutput()
+    There  is  a transaction, a gives 100 yuan to b and c respectively. However, a only has 100 yuan. I designed one input with two outputs.
 
-  For a transaction a to b, I designed that a should pay b -100 yuan, which causes the output of the transaction is negative.
+  - tesDoubleSpending2()
 
-- testInputShorage()
+    There are two transactions. First, a gives b 100 yuan. And then, a gives c 100 yuan. It is a doublespending problem.  
 
-  There is  a transaction a to b using 200 yuan, while a only has 100 yuan, which causes the input shortage.
+    
 
-- testDoubleSpending1()
+- Finally, **a relatively complex transaction network** is constructed as an application test of my methods. I also regard it as a challenge for me, **a newcomer to Java**. 
 
-  There  is  a transaction, a gives 100 yuan to b and c respectively. However, a only has 100 yuan. I designed one input with two outputs.
+  The following is a series transactions. My aim is to build the transaction net, and use my method to find the valid array of transactions.
 
-- tesDoubleSpending2()
+![](E:\blockchainhomeworkrepo\微信图片_20190923001437.png)
 
-  There are two transactions. First, a gives b 100 yuan. And then, a gives c 100 yuan. It is a doublespending problem.  
+In the test, a_b_c, d_e, f_g_h, i ,assume they pay each other with their initial 100 yuan, and for other transactions  related with them, they would use the money they get later. 
+
+In the end, I get the valid array of transactions successfully. And the following is the result I get. The red ones are valid transaction.
+
+![](E:\blockchainhomeworkrepo\微信图片_20190923001431.png)
+
+
+
