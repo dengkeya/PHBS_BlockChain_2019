@@ -68,7 +68,7 @@ upool.addUTXO(new UTXO(tx_origin_hashc,0)
 
   The following is a series transactions. My aim is to build the transaction net, and use my method to find the valid array of transactions.
 
-![](E:\blockchainhomeworkrepo\微信图片_20190923001437.png)
+![](https://github.com/dengkeya/PHBS_BlockChain_2019/blob/master/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190923001437.png)
 
 In the test, a_b_c, d_e, f_g_h, i ,assume they pay each other with their initial 100 yuan, and for other transactions  related with them, they would use the money they get later. 
 
@@ -78,7 +78,7 @@ In the end, I get the valid array of transactions successfully. And the followin
 
 - Here is my test result:
 
-  ![](E:\blockchainhomeworkrepo\微信图片_20190923002050.png)
+  ![](https://github.com/dengkeya/PHBS_BlockChain_2019/blob/master/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190923002050.png)
 
 
 
