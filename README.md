@@ -74,7 +74,11 @@ In the test, a_b_c, d_e, f_g_h, i ,assume they pay each other with their initial
 
 In the end, I get the valid array of transactions successfully. And the following is the result I get. The red ones are valid transaction.
 
-![](E:\blockchainhomeworkrepo\微信图片_20190923001431.png)
+![](https://github.com/dengkeya/PHBS_BlockChain_2019/blob/master/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190923001431.png)
+
+- Here is my test result:
+
+  ![](E:\blockchainhomeworkrepo\微信图片_20190923002050.png)
 
 
 
