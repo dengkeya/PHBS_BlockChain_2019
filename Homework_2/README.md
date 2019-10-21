@@ -62,28 +62,28 @@
 
   - test_6: add a block into a chain with height 5
 
-    ![](E:\JavaNotebook\Homework_2\test_61.png)
+    ![](https://github.com/dengkeya/PHBS_BlockChain_2019/blob/master/Homework_2/test_61.png)
 
   - test_7: add a branch from genesis into a chain with height 16
 
-    ![](E:\JavaNotebook\Homework_2\test_7.png)
+    ![](https://github.com/dengkeya/PHBS_BlockChain_2019/blob/master/Homework_2/test_7.png)
 
   - test_8: Create a block after a valid transaction has been processed that uses a UTXO already claimed by a transaction in the longest valid branch
 
-    ![](E:\JavaNotebook\Homework_2\test_8.png)
+    ![](https://github.com/dengkeya/PHBS_BlockChain_2019/blob/master/Homework_2/test_8.png)
 
   - test_9: Construct two branches of approximately equal size, ensuring that blocks are always created on the proper branch
 
-    ![](E:\JavaNotebook\Homework_2\test_9.png)
+    ![](https://github.com/dengkeya/PHBS_BlockChain_2019/blob/master/Homework_2/test_9.png)
 
   - test_10: Construct two branches of approximately equal size, ensuring that blocks are always created on the proper branch
 
-    ![](E:\JavaNotebook\Homework_2\test_10.png)
+    ![](https://github.com/dengkeya/PHBS_BlockChain_2019/blob/master/Homework_2/test_10.png)
 
   - test_11:  complex structure with multiple branches
 
-    ![](E:\JavaNotebook\Homework_2\test_11.png)
+    ![](https://github.com/dengkeya/PHBS_BlockChain_2019/blob/master/Homework_2/test_11.png)
 
 Here is my test results:
 
-![](E:\JavaNotebook\Homework_2\testrrr.png)
+![](https://github.com/dengkeya/PHBS_BlockChain_2019/blob/master/Homework_2/testrrr.png)
